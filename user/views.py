@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .models import CustomUser
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from django.urls import reverse
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, authenticate, login
 from django.contrib.auth.decorators import login_required
 
 
@@ -17,6 +17,23 @@ from django.contrib.auth.decorators import login_required
 #         pass
 #
 #     return render(request, 'user/profile.html', {"form": user_form})
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        print(form.is_valid())
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+
+            # return redirect(reverse('view_profile'))
+            return render(request, 'accounts/profile.html', {'form': form.data})
+    else:
+        form = CustomUserCreationForm()
+
+    args = {'form': form}
+    return render(request, 'accounts/reg_form.html', args)
+
 
 def view_profile(request, id=None):
     if id:
@@ -33,7 +50,7 @@ def edit_profile(request):
 
         if form.is_valid():
             form.save()
-            return redirect(reverse('accounts:view_profile'))
+            return redirect(reverse('user:view_profile'))
     else:
         form = CustomUserChangeForm(instance=request.user)
         args = {'form': form}

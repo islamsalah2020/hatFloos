@@ -8,8 +8,11 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
-    DOB = models.DateField(default=now)
-    FB = models.URLField(max_length=60)
+    DOB = models.DateField(default=now, null=True)
+    FB = models.URLField(max_length=60, blank=True)
     picture = models.ImageField()
     country = models.CharField(max_length=20)
     phone = models.CharField(max_length=11, default=0)
+
+    def __self__(self):
+        return self.username
