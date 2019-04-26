@@ -25,7 +25,6 @@ def register(request):
         print(form.errors)
         if form.is_valid():
             form.save()
-
             # return redirect(reverse('view_profile'))
             return render(request, 'accounts/profile.html', {'form': form.data})
     else:

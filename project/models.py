@@ -68,3 +68,4 @@ class ProjectReport(models.Model):
 
     def __str__(self):
         return self.msg
+
