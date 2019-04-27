@@ -1,8 +1,8 @@
-{% block title %}Home{% endblock %}
+{% block title %}{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
+  goodbye {{ user.username }}!
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a>
