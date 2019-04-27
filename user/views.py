@@ -31,7 +31,7 @@ def register(request):
         form = CustomUserCreationForm()
 
     args = {'form': form}
-    return render(request, 'user/reg_form.html', args)
+    return render(request, 'accounts/reg_form.html', args)
 
 
 def view_profile(request, id=None):
@@ -40,17 +40,23 @@ def view_profile(request, id=None):
     else:
         user = request.user
     args = {'user': user}
-    # return render(request, 'user/profile.html', args)
+    return render(request, 'accounts/profile.html', args)
 
 
-def edit_profile(request):
+def edit_profile(request, id=None):
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, instance=request.user)
-
+        print(form.is_valid())
         if form.is_valid():
             form.save()
-            return redirect(reverse('user:view_profile'))
+            return redirect('view_profile', request.user.id)
     else:
-        form = CustomUserChangeForm(instance=request.user)
+        form = CustomUserChangeForm(
+            initial={'username': request.user.username, 'first_name': request.user.first_name,
+                     'last_name': request.user.last_name,
+                     'email': request.user.email,
+                     'password': request.user.password, 'date': request.user.DOB, 'country': request.user.country,
+                     'phone': request.user.phone})
+        # form = CustomUserChangeForm(instance=request.user)
         args = {'form': form}
-        return render(request, 'user/edit_profile.html', args)
+        return render(request, 'accounts/edit_profile.html', args)
