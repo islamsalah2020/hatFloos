@@ -26,7 +26,7 @@ def register(request):
         if form.is_valid():
             form.save()
             # return redirect(reverse('view_profile'))
-            return render(request, 'user/profile.html', {'form': form.data})
+            return render(request, 'accounts/profile.html', {'form': form.data})
     else:
         form = CustomUserCreationForm()
 

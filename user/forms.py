@@ -39,6 +39,7 @@ class CustomUserChangeForm(UserChangeForm):
     picture = forms.ImageField(required=False)
     country = forms.CharField(required=False, max_length=20)
     phone = forms.CharField(max_length=11)
+
     class Meta:
         model = CustomUser
         fields = (
