@@ -1,12 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>myprojects</title>
+    <title>{% block title %}Default title{% endblock %}</title>
 </head>
 <body>
+<ul>
 
-#list all projects of hossam
-Project.objects.all()
+    <h1>My projects:</h1>
+    {% for project in user.project_set.all %}
+    <li>{{ project.title }}</li>
+    <li>{{ project.target }}</li>
+    {% endfor %}
+
+</ul>
 </body>
 </html>
