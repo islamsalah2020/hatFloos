@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
-from .models import Category, CustomUser, Project
+from .models import Category, CustomUser, Project , Donation
+from django.db.models import Sum
 from project.forms import ProjectCreationForm, CatCreationForm
 
 
@@ -34,5 +35,15 @@ def create_cat(request):
 def myprojects(request, uid):
     # if request.method == 'GET':
     #     user = Project.objects.get(creator=uid)
-    user = CustomUser.objects.get(id=uid)
-    return render(request, 'project/list_all.html', {"user": user})
+    projects = Project.objects.filter(creator_id=uid)
+    my_projects = []
+    for project in projects:
+        total_donation = Donation.objects.filter(project_id=project.id).aggregate(Sum('amount'))
+        single_project = {"title": project.title, "donations": total_donation, "id": project.id}
+        my_projects.append(single_project)
+    return render(request, 'project/list_all.html', {"projects": my_projects})
+
+
+def project_details (request, pid):
+    item = Project.objects.get(id=pid)
+    return render(request, 'project/project_details.html', {"item": item})
