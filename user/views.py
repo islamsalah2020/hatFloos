@@ -21,12 +21,13 @@ from django.contrib.auth.decorators import login_required
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        print(form.is_valid())
-        print(form.errors)
+        print(request.user)
+
         if form.is_valid():
             form.save()
             # return redirect(reverse('view_profile'))
-            return render(request, 'accounts/profile.html', {'form': form.data})
+            # return render(request, 'accounts/profile.html', {'form': form.data})
+            return redirect('login')
     else:
         form = CustomUserCreationForm()
 
