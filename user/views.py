@@ -26,12 +26,12 @@ def register(request):
         if form.is_valid():
             form.save()
             # return redirect(reverse('view_profile'))
-            return render(request, 'accounts/profile.html', {'form': form.data})
+            return render(request, 'user/profile.html', {'form': form.data})
     else:
         form = CustomUserCreationForm()
 
     args = {'form': form}
-    return render(request, 'accounts/reg_form.html', args)
+    return render(request, 'user/reg_form.html', args)
 
 
 def view_profile(request, id=None):
@@ -40,7 +40,7 @@ def view_profile(request, id=None):
     else:
         user = request.user
     args = {'user': user}
-    return render(request, 'accounts/profile.html', args)
+    # return render(request, 'user/profile.html', args)
 
 
 def edit_profile(request):
@@ -53,4 +53,4 @@ def edit_profile(request):
     else:
         form = CustomUserChangeForm(instance=request.user)
         args = {'form': form}
-        return render(request, 'accounts/edit_profile.html', args)
+        return render(request, 'user/edit_profile.html', args)
