@@ -1,6 +1,7 @@
 db.sqlite3
 .idea
 hatFloos/env.py
-comment/__pychache__
-user/__pychache__
-project/__pychache__
+comment/__pycache__
+user/__pycache__
+project/__pycache__
+hatFloos/__pycache__
