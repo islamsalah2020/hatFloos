@@ -35,11 +35,21 @@ def view_profile(request, id=None):
 
 def edit_profile(request, id=None):
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
+        form = CustomUserChangeForm(request.POST, instance=request.user,
+                                    initial={'username': request.user.username, 'first_name': request.user.first_name,
+                                             'last_name': request.user.last_name,
+                                             'email': request.user.email,
+                                             'password': request.user.password, 'date': request.user.DOB,
+                                             'country': request.user.country,
+                                             'phone': request.user.phone})
+        args = {'form': form}
         print(form.is_valid())
         if form.is_valid():
             form.save()
             return redirect('view_profile', request.user.id)
+        else:
+            return render(request, 'accounts/edit_profile.html', args)
+
     else:
         form = CustomUserChangeForm(
             initial={'username': request.user.username, 'first_name': request.user.first_name,
@@ -52,7 +62,7 @@ def edit_profile(request, id=None):
         return render(request, 'accounts/edit_profile.html', args)
 
 
-def delete_account(request,id=None):
+def delete_account(request, id=None):
     user = request.user
     user.is_active = False
     user.save()

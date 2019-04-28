@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import user
-from .env import *
+# from .env import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -78,12 +78,8 @@ WSGI_APPLICATION = 'hatFloos.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': DB,
-        'USER': USER,
-        'PASSWORD': PASSWORD,
-        'HOST': HOST,  # Or an IP Address that your DB is hosted on
-        'PORT': PORT,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
