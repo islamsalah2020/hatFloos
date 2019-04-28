@@ -7,11 +7,11 @@
 <ul>
 
     <h1>My projects:</h1>
-    {% for project in user.project_set.all %}
-    <li>{{ project.title }}</li>
-    <li>{{ project.target }}</li>
-    {% endfor %}
+    {% for project in projects %}
+    <li><a href=/project/x/{{project.id}}>{{ project.title }}</a>  </li>
+    <li>{{ project.donations }}</li>
 
+    {% endfor %}
 </ul>
 </body>
 </html>
