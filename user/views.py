@@ -7,17 +7,6 @@ from django.contrib.auth import update_session_auth_hash, authenticate, login
 from django.contrib.auth.decorators import login_required
 
 
-# def get_user_info(request, id):
-#     user = models.CustomUser.objects.get(id=id)
-#     if request.method == 'GET':
-#         user_form = forms.UserProfileForm(
-#             initial={'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email,
-#                      'password': user.password, 'date': user.DOB, 'country': user.country, 'phone': user.phone})
-#     else:
-#         pass
-#
-#     return render(request, 'user/profile.html', {"form": user_form})
-
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
