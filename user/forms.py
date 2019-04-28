@@ -10,7 +10,8 @@ class CustomUserCreationForm(UserCreationForm):
     DOB = forms.DateTimeField(required=False)
     picture = forms.ImageField(required=False)
     country = forms.CharField(required=False, max_length=20)
-    phone = forms.CharField(max_length=11)
+    # phone = forms.CharField(max_length=11)
+    phone = forms.RegexField(regex=r'^01[0125][0-9]{8}$')
 
     class Meta(UserCreationForm):
         model = CustomUser
@@ -40,7 +41,8 @@ class CustomUserChangeForm(UserChangeForm):
     DOB = forms.DateTimeField(required=False)
     picture = forms.ImageField(required=False)
     country = forms.CharField(required=False, max_length=20)
-    phone = forms.CharField(max_length=11)
+    # phone = forms.CharField(max_length=11)
+    phone = forms.RegexField(regex=r'^01[0125][0-9]{8}$')
 
     class Meta:
         model = CustomUser

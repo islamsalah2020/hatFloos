@@ -7,17 +7,6 @@ from django.contrib.auth import update_session_auth_hash, authenticate, login
 from django.contrib.auth.decorators import login_required
 
 
-# def get_user_info(request, id):
-#     user = models.CustomUser.objects.get(id=id)
-#     if request.method == 'GET':
-#         user_form = forms.UserProfileForm(
-#             initial={'first_name': user.first_name, 'last_name': user.last_name, 'email': user.email,
-#                      'password': user.password, 'date': user.DOB, 'country': user.country, 'phone': user.phone})
-#     else:
-#         pass
-#
-#     return render(request, 'user/profile.html', {"form": user_form})
-
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -46,11 +35,21 @@ def view_profile(request, id=None):
 
 def edit_profile(request, id=None):
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
+        form = CustomUserChangeForm(request.POST, instance=request.user,
+                                    initial={'username': request.user.username, 'first_name': request.user.first_name,
+                                             'last_name': request.user.last_name,
+                                             'email': request.user.email,
+                                             'password': request.user.password, 'date': request.user.DOB,
+                                             'country': request.user.country,
+                                             'phone': request.user.phone})
+        args = {'form': form}
         print(form.is_valid())
         if form.is_valid():
             form.save()
             return redirect('view_profile', request.user.id)
+        else:
+            return render(request, 'accounts/edit_profile.html', args)
+
     else:
         form = CustomUserChangeForm(
             initial={'username': request.user.username, 'first_name': request.user.first_name,
