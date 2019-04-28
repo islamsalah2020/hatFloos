@@ -34,6 +34,7 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     first_name = forms.CharField(max_length=20)
     last_name = forms.CharField(max_length=20)
+    email = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
     FB = forms.URLField(required=False, max_length=60)
     DOB = forms.DateTimeField(required=False)
     picture = forms.ImageField(required=False)
