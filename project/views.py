@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from .models import Category, CustomUser, Project , Donation
+from .models import Category, CustomUser, Project, Donation
 from django.db.models import Sum
 from project.forms import ProjectCreationForm, CatCreationForm
 
@@ -44,6 +44,7 @@ def myprojects(request, uid):
     return render(request, 'project/list_all.html', {"projects": my_projects})
 
 
-def project_details (request, pid):
+def project_details(request, pid):
     item = Project.objects.get(id=pid)
     return render(request, 'project/project_details.html', {"item": item})
+

@@ -63,8 +63,9 @@ def edit_profile(request, id=None):
         return render(request, 'accounts/edit_profile.html', args)
 
 
-def delete_account(request,id=None):
+def delete_account(request, id=None):
     user = request.user
     user.is_active = False
     user.save()
     return redirect('login')
+
