@@ -4,7 +4,7 @@ from django.db.models import Sum
 from project.forms import ProjectCreationForm, CatCreationForm
 
 
-def create(request):
+def create(request , uid):
     if request.method == 'POST':
         form = ProjectCreationForm(request.POST)
         if form.is_valid():
