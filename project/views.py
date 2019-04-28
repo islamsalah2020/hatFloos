@@ -33,8 +33,6 @@ def create_cat(request):
 
 
 def myprojects(request, uid):
-    # if request.method == 'GET':
-    #     user = Project.objects.get(creator=uid)
     projects = Project.objects.filter(creator_id=uid)
     my_projects = []
     for project in projects:
