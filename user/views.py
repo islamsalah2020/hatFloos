@@ -35,7 +35,7 @@ def view_profile(request, id=None):
 
 def edit_profile(request, id=None):
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user,
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user,
                                     initial={'username': request.user.username, 'first_name': request.user.first_name,
                                              'last_name': request.user.last_name,
                                              'email': request.user.email,
