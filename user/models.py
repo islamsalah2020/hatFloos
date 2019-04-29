@@ -10,7 +10,11 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     DOB = models.DateField(default=now, null=True)
     FB = models.URLField(max_length=100)
+<<<<<<< HEAD
     picture = models.ImageField(upload_to='images/',verbose_name="")
+=======
+    picture = models.ImageField(upload_to='images/')
+>>>>>>> a219f84c6d3762df736f7785df8ebca2dd5c15e8
     country = models.CharField(max_length=20)
     phone = models.CharField(max_length=11, default=0)
 

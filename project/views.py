@@ -1,10 +1,12 @@
 from django.shortcuts import render, HttpResponse
-from .models import Category, CustomUser, Project , Donation
+from .models import Category, CustomUser, Project, Donation
 from django.db.models import Sum
 from project.forms import ProjectCreationForm, CatCreationForm
+from django.contrib.auth.decorators import login_required
 
 
-def create(request):
+@login_required(login_url='/users/login')  # redirect when user is not logged in
+def create(request, uid):
     if request.method == 'POST':
         form = ProjectCreationForm(request.POST)
         if form.is_valid():
@@ -18,6 +20,7 @@ def create(request):
         return render(request, 'project/CreateProject.html', args)
 
 
+@login_required(login_url='/users/login')  # redirect when user is not logged in
 def create_cat(request):
     if request.method == 'POST':
         form = CatCreationForm(request.POST)
@@ -32,9 +35,8 @@ def create_cat(request):
         return render(request, 'project/CreateCat.html', args)
 
 
+@login_required(login_url='/users/login')  # redirect when user is not logged in
 def myprojects(request, uid):
-    # if request.method == 'GET':
-    #     user = Project.objects.get(creator=uid)
     projects = Project.objects.filter(creator_id=uid)
     my_projects = []
     for project in projects:
@@ -44,6 +46,6 @@ def myprojects(request, uid):
     return render(request, 'project/list_all.html', {"projects": my_projects})
 
 
-def project_details (request, pid):
+def project_details(request, pid):
     item = Project.objects.get(id=pid)
     return render(request, 'project/project_details.html', {"item": item})

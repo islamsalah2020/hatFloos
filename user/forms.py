@@ -33,6 +33,7 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomUserChangeForm(UserChangeForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
     first_name = forms.CharField(max_length=20)
     last_name = forms.CharField(max_length=20)
     email = forms.EmailField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))

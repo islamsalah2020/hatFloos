@@ -1,5 +1,4 @@
 <html>
-<!--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>-->
 
 <title>Profile</title>
 
@@ -13,15 +12,31 @@
     <p>FB: {{ user.FB }}</p>
     <p>Counrtry: {{ user.country }}</p>
     <p>Phone: {{ user.phone }}</p>
+<<<<<<< HEAD
     <img src="{{ MEDIA_URL }}{{ user.picture }}" alt="...">
 
+=======
+    <img src="{{user.picture.url}}">
+>>>>>>> a219f84c6d3762df736f7785df8ebca2dd5c15e8
 
 </div>
+<p><a href="/project/{{user.id}}/projects"> MyProjects</a></p>
+<p><a href="/project/{{user.id}}/donations"> MyDonations</a></p>
+<p><a href="/project/{{user.id}}/create"> Create new Project</a></p>
 <p><a href="{% url 'logout' %}">logout</a></p>
 <p><a href="edit/{{user.id}}">Update</a></p>
+<<<<<<< HEAD
 <p><a href="delete/{{user.id}}" onclick="return confirm('Are you sure you want to delete this?')">delete account</a>
 
 </p>
 <p><a href="/project/{{user.id}}/projects">MyProjects</a></p>
 
 </html>
+=======
+<!-- <p><a href="{{user.id}}/delete">delete account</a></p> -->
+<p><a href="{{user.id}}/donation">my donations</a></p>
+<p><a href="delete/{{user.id}}" onclick="return confirm('Are you sure you want to delete this?')">delete account</a>
+
+</p>
+</html>
+>>>>>>> a219f84c6d3762df736f7785df8ebca2dd5c15e8
