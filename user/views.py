@@ -24,6 +24,7 @@ def register(request):
     return render(request, 'accounts/reg_form.html', args)
 
 
+@login_required(login_url='/users/login')  # redirect when user is not logged in
 def view_profile(request, id=None):
     if id:
         user = CustomUser.objects.get(id=id)
@@ -33,6 +34,7 @@ def view_profile(request, id=None):
     return render(request, 'accounts/profile.html', args)
 
 
+@login_required(login_url='/users/login')  # redirect when user is not logged in
 def edit_profile(request, id=None):
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user,
@@ -62,6 +64,7 @@ def edit_profile(request, id=None):
         return render(request, 'accounts/edit_profile.html', args)
 
 
+@login_required(login_url='/users/login')  # redirect when user is not logged in
 def delete_account(request, id=None):
     user = request.user
     user.is_active = False

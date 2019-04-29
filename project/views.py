@@ -2,8 +2,10 @@ from django.shortcuts import render, HttpResponse
 from .models import Category, CustomUser, Project, Donation
 from django.db.models import Sum
 from project.forms import ProjectCreationForm, CatCreationForm
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='/users/login')  # redirect when user is not logged in
 def create(request, uid):
     if request.method == 'POST':
         form = ProjectCreationForm(request.POST)
@@ -18,6 +20,7 @@ def create(request, uid):
         return render(request, 'project/CreateProject.html', args)
 
 
+@login_required(login_url='/users/login')  # redirect when user is not logged in
 def create_cat(request):
     if request.method == 'POST':
         form = CatCreationForm(request.POST)
@@ -32,6 +35,7 @@ def create_cat(request):
         return render(request, 'project/CreateCat.html', args)
 
 
+@login_required(login_url='/users/login')  # redirect when user is not logged in
 def myprojects(request, uid):
     projects = Project.objects.filter(creator_id=uid)
     my_projects = []
