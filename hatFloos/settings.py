@@ -135,9 +135,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/users/'
 LOGOUT_REDIRECT_URL = '/'
-<<<<<<< HEAD
-=======
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
->>>>>>> a219f84c6d3762df736f7785df8ebca2dd5c15e8
