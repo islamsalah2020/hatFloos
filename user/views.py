@@ -93,3 +93,5 @@ def delete_account(request, id=None):
     user.is_active = False
     user.save()
     return redirect('login')
+
+# def search(keyword):
