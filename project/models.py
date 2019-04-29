@@ -19,8 +19,6 @@ class Project(models.Model):
     end_date = models.DateField()
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
-    # donators = models.ManyToManyField(User, through='Donation')
-
     def __str__(self):
         return self.title
 

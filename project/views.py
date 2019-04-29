@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import redirect, render, HttpResponse
 from .models import Category, CustomUser, Project, Donation
 from django.db.models import Sum
 from project.forms import ProjectCreationForm, CatCreationForm
@@ -10,10 +10,20 @@ def create(request, uid):
     if request.method == 'POST':
         form = ProjectCreationForm(request.POST)
         if form.is_valid():
+            form.creator = uid
+            print("*******************kkkkkkkkkkk************")
+            print(form.fields)
+            print(form.creator)
+            print("*****************kkkkkkkkkkkk**************")
             form.save()
-            form2 = CatCreationForm()
-            args = {'form': form2}
-            return render(request, 'project/index.html', args)
+            projects = Project.objects.filter(creator_id=uid)
+            my_projects = []
+            for project in projects:
+                total_donation = Donation.objects.filter(project_id=project.id).aggregate(Sum('amount'))
+                single_project = {"title": project.title, "donations": total_donation, "id": project.id}
+                my_projects.append(single_project)
+            return render(request, 'project/list_all.html', {"projects": my_projects})
+
     else:
         form = ProjectCreationForm()
         args = {'form': form}
