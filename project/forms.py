@@ -4,7 +4,7 @@ from .models import Project, Category
 
 
 class ProjectCreationForm(forms.ModelForm):
-    creator = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    # creator = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
 
     class Meta:
         model = Project

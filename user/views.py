@@ -80,12 +80,12 @@ def delete_account(request, id=None):
     return redirect('login')
 
 
-# def top_rated():
-#     top_rated = (Rate.objects
-#                  .order_by('-rate')
-#                  .values_list('score', flat=True)
-#                  .distinct())
-#     top_records = (myModel.objects
-#                    .order_by('-score')
-#                    .filter(score__in=top_scores[:10]))
-# #     Employer.objects.values('id').annotate(jobtitle_count=Count('jobtitle')).order_by('-jobtitle_count')[:5]
+def top_rated():
+    top_rated = (Rate.objects
+                 .order_by('-rate')
+                 .values_list('score', flat=True)
+                 .distinct())
+    top_records = (Rate.objects
+                   .order_by('-score')
+                   .filter(score__in=top_rated[:10]))
+#     Employer.objects.values('id').annotate(jobtitle_count=Count('jobtitle')).order_by('-jobtitle_count')[:5]
