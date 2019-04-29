@@ -6,5 +6,4 @@ urlpatterns = [
     path('create_cat', views.create_cat, name='create'),
     path('x/<int:pid>', views.project_details, name='create'),
     path('<int:uid>/projects', views.myprojects, name='create'),
-
 ]

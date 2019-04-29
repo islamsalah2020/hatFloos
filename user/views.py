@@ -39,9 +39,9 @@ def edit_profile(request, id=None):
                                     initial={'username': request.user.username, 'first_name': request.user.first_name,
                                              'last_name': request.user.last_name,
                                              'email': request.user.email,
-                                             'password': request.user.password, 'date': request.user.DOB,
+                                             'password': request.user.password, 'DOB': request.user.DOB,
                                              'country': request.user.country,
-                                             'phone': request.user.phone})
+                                             'phone': request.user.phone, 'FB': request.user.FB})
         args = {'form': form}
         print(form.is_valid())
         if form.is_valid():
@@ -55,8 +55,8 @@ def edit_profile(request, id=None):
             initial={'username': request.user.username, 'first_name': request.user.first_name,
                      'last_name': request.user.last_name,
                      'email': request.user.email,
-                     'password': request.user.password, 'date': request.user.DOB, 'country': request.user.country,
-                     'phone': request.user.phone})
+                     'password': request.user.password, 'DOB': request.user.DOB, 'country': request.user.country,
+                     'phone': request.user.phone, 'FB': request.user.FB})
         # form = CustomUserChangeForm(instance=request.user)
         args = {'form': form}
         return render(request, 'accounts/edit_profile.html', args)

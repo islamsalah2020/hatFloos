@@ -12,10 +12,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import user
-from .env import *
+
+# from .env import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URl = '/media/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -66,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'
+
             ],
         },
     },
@@ -75,23 +80,23 @@ WSGI_APPLICATION = 'hatFloos.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-# DATABASES = {
-#    'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#      }
-#  }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': DB,
-        'USER': USER,
-        'PASSWORD': PASSWORD,
-        'HOST': HOST,  # Or an IP Address that your DB is hosted on
-        'PORT': PORT,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': DB,
+#         'USER': USER,
+#         'PASSWORD': PASSWORD,
+#         'HOST': HOST,  # Or an IP Address that your DB is hosted on
+#         'PORT': PORT,
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -130,5 +135,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/users/'
 LOGOUT_REDIRECT_URL = '/'
-
-

@@ -13,50 +13,15 @@
     <p>FB: {{ user.FB }}</p>
     <p>Counrtry: {{ user.country }}</p>
     <p>Phone: {{ user.phone }}</p>
+    <img src="{{ MEDIA_URL }}{{ user.picture }}" alt="...">
 
-    <!--<p>Phone: {{ user.userprofile.phone }}</p>-->
-    <!--<p>City: {{ user.userprofile.city }}</p>-->
-    <!--<p>Website: {{ user.userprofile.website }}</p>-->
-    <!--{% if user.userprofile.image %}-->
-    <!--<img src="{{ user.userprofile.image.url }}" width="240">-->
-    <!--{% endif %}-->
+
 </div>
 <p><a href="{% url 'logout' %}">logout</a></p>
 <p><a href="edit/{{user.id}}">Update</a></p>
-    <p><a href="delete/{{user.id}}" onclick="return confirm('Are you sure you want to delete this?')">delete account</a>
+<p><a href="delete/{{user.id}}" onclick="return confirm('Are you sure you want to delete this?')">delete account</a>
 
 </p>
-
-<!--<p><a href="#" onclick="', 'success');">delete account</a></p>-->
-
-<!--<script>-->
-    <!--function confirm_delete(){-->
-    <!--swal({-->
-  <!--title: "Are you sure?",-->
-  <!--text: "Once deleted, you will not be able to recover this imaginary file!",-->
-  <!--icon: "warning",-->
-  <!--buttons: true,-->
-  <!--dangerMode: true,-->
-<!--})-->
-<!--.then((willDelete) => {-->
-  <!--if (willDelete) {-->
-
-    <!--delete_account()-->
-
-    <!--swal("Poof! Your imaginary file has been deleted!", {-->
-      <!--icon: "success",-->
-    <!--});-->
-  <!--} else {-->
-    <!--swal("Your imaginary file is safe!");-->
-  <!--}-->
-<!--});-->
-
-    <!--}-->
-
-
-
-
-
-<!--</script>-->
+<p><a href="/project/{{user.id}}/projects">MyProjects</a></p>
 
 </html>
