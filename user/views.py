@@ -71,6 +71,16 @@ def edit_profile(request, id=None):
         return render(request, 'accounts/edit_profile.html', args)
 
 
+@login_required(login_url='/users/login')  # redirect when user is not logged in
+def delete_account(request, id=None):
+    user = request.user
+    user.username = request.user.username + "pbkdf2" + str(random.randint(0, 100))
+    user.email = request.user.email + "pbkdf2" + str(random.randint(0, 100))
+    user.is_active = False
+    user.save()
+    return redirect('login')
+
+
 def top_rated(request):
     top_rated = Rate.objects.all().order_by('-rate')[:5]
     rated_id = []
@@ -85,17 +95,13 @@ def top_rated(request):
     return HttpResponse(rated_id)
 
 
-@login_required(login_url='/users/login')  # redirect when user is not logged in
-def delete_account(request, id=None):
-    user = request.user
-    user.username = request.user.username + "pbkdf2" + str(random.randint(0, 100))
-    user.email = request.user.email + "pbkdf2" + str(random.randint(0, 100))
-    user.is_active = False
-    user.save()
-    return redirect('login')
-
-
 def featured_projects(request):
     featured_projects = FeaturedProject.objects.all().order_by('feature_date')[:5]
     return HttpResponse(featured_projects)
+
+
+def latest_projects(request):
+    latest_projects = Project.objects.all().order_by('start_date')[:5]
+    return HttpResponse(latest_projects)
+
 # def search(keyword):

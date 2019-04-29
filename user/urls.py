@@ -11,6 +11,7 @@ urlpatterns = [
     path('edit/<int:id>', views.edit_profile, name='edit_profile'),
     path('delete/<int:id>', views.delete_account),
     path('test/test', views.top_rated, name='top_rated'),
-    path('test/test/test', views.featured_projects, name='featured_projects')
+    path('test/test/test', views.featured_projects, name='featured_projects'),
+    path('test/projects',views.latest_projects,name='latest_projects'),
     # path(r'<int:id>/edit/', views.edit_profile, name='edit_profile'),
 ]

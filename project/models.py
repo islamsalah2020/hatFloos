@@ -16,7 +16,7 @@ class Project(models.Model):
     description = models.CharField(max_length=20)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     target = models.IntegerField()
-    start_date = models.DateField()
+    start_date = models.DateField(default=now)
     end_date = models.DateField()
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
