@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView  # new
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +25,11 @@ urlpatterns = [
     path('users/', include('django.contrib.auth.urls')),  # new
     path('users/', TemplateView.as_view(template_name='accounts/profile.html'), name='profile'),  # new
     path('', TemplateView.as_view(template_name='home.html'), name='home'),  # new
-    path('project/', include('project.urls'))
+    path('users/project', include('project.urls')),
+    path('', include('user.urls'))
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+
+

@@ -10,7 +10,9 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     DOB = models.DateField(default=now, null=True)
     FB = models.URLField(max_length=100)
+
     picture = models.ImageField(upload_to='images/')
+
     country = models.CharField(max_length=20)
     phone = models.CharField(max_length=11, default=0)
 

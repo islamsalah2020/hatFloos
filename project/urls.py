@@ -9,3 +9,4 @@ urlpatterns = [
     path('<int:uid>/donations', views.myprojects, name='create'),
     path('<int:uid>/create', views.create, name='create'),
 ]
+
