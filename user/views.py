@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.contrib.auth import update_session_auth_hash, authenticate, login
 from django.contrib.auth.decorators import login_required
 from project.models import *
+import random
 
 
 def register(request):
@@ -84,15 +85,11 @@ def top_rated(request):
     return HttpResponse(rated_id)
 
 
-
-
 @login_required(login_url='/users/login')  # redirect when user is not logged in
 def delete_account(request, id=None):
     user = request.user
-    user.username = request.user.username + "pbkdf2"
-    user.email = request.user.email + "pbkdf2"
+    user.username = request.user.username + "pbkdf2" + str(random.randint(0, 100))
+    user.email = request.user.email + "pbkdf2" + str(random.randint(0, 100))
     user.is_active = False
     user.save()
     return redirect('login')
-
-
