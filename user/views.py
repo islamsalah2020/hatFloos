@@ -5,6 +5,7 @@ from .forms import CustomUserChangeForm, CustomUserCreationForm
 from django.urls import reverse
 from django.contrib.auth import update_session_auth_hash, authenticate, login
 from django.contrib.auth.decorators import login_required
+from project.models import *
 
 
 def register(request):
@@ -44,9 +45,8 @@ def edit_profile(request, id=None):
                                              'password': request.user.password, 'DOB': request.user.DOB,
                                              'country': request.user.country,
 
-                                             'phone': request.user.phone, 'FB': request.user.FB, 'picture': request.user.picture})
-
-
+                                             'phone': request.user.phone, 'FB': request.user.FB,
+                                             'picture': request.user.picture})
 
         args = {'form': form}
         print(form.is_valid())
@@ -63,7 +63,7 @@ def edit_profile(request, id=None):
                      'email': request.user.email,
 
                      'password': request.user.password, 'DOB': request.user.DOB, 'country': request.user.country,
-                     'phone': request.user.phone, 'FB': request.user.FB,'picture': request.user.picture})
+                     'phone': request.user.phone, 'FB': request.user.FB, 'picture': request.user.picture})
 
         # form = CustomUserChangeForm(instance=request.user)
         args = {'form': form}
@@ -73,6 +73,19 @@ def edit_profile(request, id=None):
 @login_required(login_url='/users/login')  # redirect when user is not logged in
 def delete_account(request, id=None):
     user = request.user
+    user.username = request.user.username + "pbkdf2"
+    user.email = request.user.email + "pbkdf2"
     user.is_active = False
     user.save()
     return redirect('login')
+
+
+# def top_rated():
+#     top_rated = (Rate.objects
+#                  .order_by('-rate')
+#                  .values_list('score', flat=True)
+#                  .distinct())
+#     top_records = (myModel.objects
+#                    .order_by('-score')
+#                    .filter(score__in=top_scores[:10]))
+# #     Employer.objects.values('id').annotate(jobtitle_count=Count('jobtitle')).order_by('-jobtitle_count')[:5]

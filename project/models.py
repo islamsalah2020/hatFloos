@@ -58,7 +58,7 @@ class Rate(models.Model):
     rate = models.IntegerField()
 
     def __str__(self):
-        return self.rate
+        return str(self.rate)
 
 
 class ProjectReport(models.Model):

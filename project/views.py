@@ -1,11 +1,13 @@
-from django.shortcuts import redirect,render, HttpResponse
+from django.shortcuts import redirect, render, HttpResponse
 from .models import Category, CustomUser, Project, Donation
 from django.db.models import Sum
 from project.forms import ProjectCreationForm, CatCreationForm
 from django.contrib.auth.decorators import login_required
 
+
 @login_required(login_url='/users/login')  # redirect when user is not logged in
 def create(request, uid):
+    
     if request.method == 'POST':
 
         # request.POST.creator_id = uid
