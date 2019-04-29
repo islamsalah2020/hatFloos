@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 def register(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST, request.FILES)
         print(request.user)
 
         if form.is_valid():
@@ -41,7 +41,7 @@ def edit_profile(request, id=None):
                                              'email': request.user.email,
                                              'password': request.user.password, 'date': request.user.DOB,
                                              'country': request.user.country,
-                                             'phone': request.user.phone})
+                                             'phone': request.user.phone, 'picture': request.user.picture})
         args = {'form': form}
         print(form.is_valid())
         if form.is_valid():
@@ -56,7 +56,7 @@ def edit_profile(request, id=None):
                      'last_name': request.user.last_name,
                      'email': request.user.email,
                      'password': request.user.password, 'date': request.user.DOB, 'country': request.user.country,
-                     'phone': request.user.phone})
+                     'phone': request.user.phone, 'picture': request.user.picture})
         # form = CustomUserChangeForm(instance=request.user)
         args = {'form': form}
         return render(request, 'accounts/edit_profile.html', args)
@@ -67,4 +67,3 @@ def delete_account(request, id=None):
     user.is_active = False
     user.save()
     return redirect('login')
-
