@@ -94,4 +94,8 @@ def delete_account(request, id=None):
     user.save()
     return redirect('login')
 
+
+def featured_projects(request):
+    featured_projects = FeaturedProject.objects.all().order_by('feature_date')[:5]
+    return HttpResponse(featured_projects)
 # def search(keyword):

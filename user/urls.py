@@ -10,6 +10,7 @@ urlpatterns = [
     # path(r'^profile/(?P<id>\d+)/$', views.view_profile, name='view_profile_with_pk'),
     path('edit/<int:id>', views.edit_profile, name='edit_profile'),
     path('delete/<int:id>', views.delete_account),
-    path('test/test', views.top_rated, name='top_rated')
+    path('test/test', views.top_rated, name='top_rated'),
+    path('test/test/test', views.featured_projects, name='featured_projects')
     # path(r'<int:id>/edit/', views.edit_profile, name='edit_profile'),
 ]

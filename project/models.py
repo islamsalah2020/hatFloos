@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import CustomUser
+from django.utils.timezone import now
 
 
 # Create your models here.
@@ -72,6 +73,7 @@ class ProjectReport(models.Model):
 
 class FeaturedProject(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    feature_date = models.DateField(default=now)
 
     def __str__(self):
         return self.project.title
