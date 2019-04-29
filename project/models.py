@@ -40,7 +40,7 @@ class Pic(models.Model):
     pic = models.ImageField()
 
     def __str__(self):
-        return self.pic
+        return str(self.pic)
 
 
 class Donation(models.Model):

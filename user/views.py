@@ -70,6 +70,22 @@ def edit_profile(request, id=None):
         return render(request, 'accounts/edit_profile.html', args)
 
 
+def top_rated(request):
+    top_rated = Rate.objects.all().order_by('-rate')[:5]
+    rated_id = []
+    rated_pic = []
+    print(top_rated)
+    for rate in top_rated:
+        rated_id.append(rate.project.pk)
+    for id in rated_id:
+        rated_pic.append(Pic.objects.filter(project_id=id).values('pic').distinct())
+
+    print(rated_pic)
+    return HttpResponse(rated_id)
+
+
+
+
 @login_required(login_url='/users/login')  # redirect when user is not logged in
 def delete_account(request, id=None):
     user = request.user
@@ -80,12 +96,3 @@ def delete_account(request, id=None):
     return redirect('login')
 
 
-def top_rated():
-    top_rated = (Rate.objects
-                 .order_by('-rate')
-                 .values_list('score', flat=True)
-                 .distinct())
-    top_records = (Rate.objects
-                   .order_by('-score')
-                   .filter(score__in=top_rated[:10]))
-#     Employer.objects.values('id').annotate(jobtitle_count=Count('jobtitle')).order_by('-jobtitle_count')[:5]

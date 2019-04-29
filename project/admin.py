@@ -5,5 +5,6 @@ from . import models
 admin.site.register(models.Project)
 admin.site.register(models.ProjectReport)
 admin.site.register(models.Category)
-admin.site.register(models.Rate)
+# admin.site.register(models.Rate)
+admin.site.register(models.Pic)
 # admin.site.register(models.Donation)
