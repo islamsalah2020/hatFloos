@@ -36,3 +36,8 @@ class CustomUserChangeForm(UserChangeForm):
         fields = (
             'username', 'email', 'first_name', 'last_name', 'password', 'FB', 'DOB', 'country', 'phone',
             'picture')
+
+
+class ReportForm(forms.Form):
+    report_reason = forms.CharField(max_length=100)
+

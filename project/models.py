@@ -1,7 +1,8 @@
 from django.db import models
 from user.models import CustomUser
-
-
+from django.conf import settings
+from django.utils import timezone
+import datetime
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=20)
