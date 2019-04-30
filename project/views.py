@@ -56,7 +56,7 @@ def myprojects(request, uid):
 def project_details(request, pid):
     item = Project.objects.get(id=pid)
     # here hard coded for current user till add it from url
-    user = CustomUser.objects.get(id=8)
+    user = CustomUser.objects.get(id=item.creator_id)
     comments = item.comment_set.all()
     # comments = Comment.objects.all()
     if request.method == "POST":
@@ -64,15 +64,10 @@ def project_details(request, pid):
         edit = commentform.save(commit=False)
         edit.project = item
         edit.commenter = user
-        # comment.content = form.cleaned_data['comment_area']
+
         edit.save()
         form = AddCommentForm()
         return render(request, 'project/project_details.html', {"item": item, "form": form, "comments": comments})
-        # form = AddCommentForm()
-
-        # return render(request, 'project/project_details.html', {"item": item, "form": form})
     else:
-        # commentform = AddCommentForm()
-        # return render(request, 'project/project_details.html', {"item": item, "form": commentform})
         form = AddCommentForm
         return render(request, 'project/project_details.html', {"item": item, "form": form, "comments": comments})
