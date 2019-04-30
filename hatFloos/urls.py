@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('user.urls')),
+    path('project/', include('project.urls')),
     path('users/', include('django.contrib.auth.urls')),  # new
     path('users/', TemplateView.as_view(template_name='accounts/profile.html'), name='profile'),  # new
     path('', TemplateView.as_view(template_name='home.html'), name='home'),  # new
@@ -29,7 +30,4 @@ urlpatterns = [
     path('', include('user.urls'))
 ]
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
-
-
-
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

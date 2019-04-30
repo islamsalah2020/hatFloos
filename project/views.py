@@ -1,9 +1,10 @@
 from django.shortcuts import redirect, render, HttpResponse
-from .models import Category, CustomUser, Project, Donation
+from .models import Category, CustomUser, Project, Donation, ProjectReport, Tag
 from comment.models import Comment
 from comment.forms import AddCommentForm
 from django.db.models import Sum
-from project.forms import ProjectCreationForm, CatCreationForm
+from project.forms import ProjectCreationForm, CatCreationForm, TagForm
+from user.forms import ReportForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -13,6 +14,16 @@ def create(request, uid):
 
         form = ProjectCreationForm(request.POST)
         if form.is_valid():
+            print("*******************form creator1111111111111111************")
+            form.creator = uid
+            print(form.creator)
+            print("*******************form fields************")
+            print(form.fields)
+            print("*******************uuuuuuuuuuuiiiiiiiiiiiiiidddddddddddddddd************")
+            print(uid)
+            print("*******************form creator22222222222222222************")
+            print(form.creator)
+            print("*****************kkkkkkkkkkkk**************")
             form.save()
             projects = Project.objects.filter(creator_id=uid)
             my_projects = []
@@ -21,6 +32,7 @@ def create(request, uid):
                 single_project = {"title": project.title, "donations": total_donation, "id": project.id}
                 my_projects.append(single_project)
             return render(request, 'project/list_all.html', {"projects": my_projects})
+
     else:
         form = ProjectCreationForm()
         args = {'form': form}
@@ -71,3 +83,50 @@ def project_details(request, pid):
     else:
         form = AddCommentForm
         return render(request, 'project/project_details.html', {"item": item, "form": form, "comments": comments})
+
+    return render(request, 'project/project_details.html', {"item": item})
+
+
+def delete_project(request, pid):
+    project = Project.objects.get(id=pid)
+    total_donation = Donation.objects.filter(project_id=pid).aggregate(Sum('amount'))
+    if total_donation['amount__sum'] is None or total_donation['amount__sum'] < (project.target * 25)/100:
+        project.delete()
+    return myprojects(request, request.user.id)
+
+
+def report_project(request, pid):
+    if request.method == 'POST':
+        form = ReportForm(request.POST)
+        report = ProjectReport()
+        if form.is_valid():
+            project = Project.objects.get(id=pid)
+            report.project = project
+            report.msg = request.POST['report_reason']
+            report.reporter = request.user
+            report.save()
+            return myprojects(request, request.user.id)
+    else:
+        form = ReportForm(request.POST)
+        args = {'form': form}
+        return render(request, 'project/report_project.html', args)
+
+
+def tag_project(request, pid):
+    if request.method == 'POST':
+        form = TagForm(request.POST)
+        tag = Tag()
+        if form.is_valid():
+            project = Project.objects.get(id=pid)
+            # tag.project = project.id
+            tag.tag = request.POST['tag']
+            tag.save()
+            return myprojects(request, request.user.id)
+    else:
+        form = TagForm(request.POST)
+        args = {'form': form}
+        return render(request, 'project/tag_project.html', args)
+
+
+
+

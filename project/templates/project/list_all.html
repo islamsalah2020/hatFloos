@@ -11,7 +11,10 @@
     {% for project in projects %}
     <li><a href=/project/x/{{project.id}}>{{ project.title }}</a>  </li>
     <li>{{ project.donations }}</li>
+    <a href="/project/{{project.id}}/delete" onclick="return confirm('Are you sure you want to delete this?')">Cancel project</a>
+    <a href="/project/{{project.id}}/report">Report project</a>
 
+    <hr>
     {% endfor %}
 </ul>
 </body>
