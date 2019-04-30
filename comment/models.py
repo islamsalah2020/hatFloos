@@ -6,10 +6,10 @@ from user.models import CustomUser
 # Create your models here.
 
 class Comment(models.Model):
-    comment_body = models.CharField(max_length=100)
+    comment_body = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     commenter = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=None)
-    parent = models.ForeignKey("self", on_delete=models.CASCADE)
+    # parent = models.ForeignKey("self", on_delete=models.CASCADE)
 
 
 class CommentReport(models.Model):
