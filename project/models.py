@@ -1,8 +1,9 @@
 from django.db import models
 from user.models import CustomUser
 from django.conf import settings
-from django.utils import timezone
-import datetime
+from django.utils.timezone import now
+
+
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=20)
@@ -16,7 +17,7 @@ class Project(models.Model):
     description = models.CharField(max_length=20)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     target = models.IntegerField()
-    start_date = models.DateField()
+    start_date = models.DateField(default=now)
     end_date = models.DateField()
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
@@ -39,7 +40,7 @@ class Pic(models.Model):
     pic = models.ImageField()
 
     def __str__(self):
-        return self.pic
+        return str(self.pic)
 
 
 class Donation(models.Model):
@@ -57,7 +58,7 @@ class Rate(models.Model):
     rate = models.IntegerField()
 
     def __str__(self):
-        return self.rate
+        return str(self.rate)
 
 
 class ProjectReport(models.Model):
@@ -68,3 +69,10 @@ class ProjectReport(models.Model):
     def __str__(self):
         return self.msg
 
+
+class FeaturedProject(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    feature_date = models.DateField(default=now)
+
+    def __str__(self):
+        return self.project.title

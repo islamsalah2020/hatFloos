@@ -12,7 +12,12 @@
     <p>FB: {{ user.FB }}</p>
     <p>Counrtry: {{ user.country }}</p>
     <p>Phone: {{ user.phone }}</p>
+
     <img src="{{ MEDIA_URL }}{{ user.picture }}" alt="...">
+
+
+
+
 </div>
 <p><a href="/project/{{user.id}}/projects"> MyProjects</a></p>
 <p><a href="/project/{{user.id}}/donations"> MyDonations</a></p>
@@ -22,12 +27,8 @@
 <p><a href="delete/{{user.id}}" onclick="return confirm('Are you sure you want to delete this?')">delete account</a>
 
 </p>
-<p><a href="/project/{{user.id}}/projects">MyProjects</a></p>
-
 </html>
 <!-- <p><a href="{{user.id}}/delete">delete account</a></p> -->
-<p><a href="{{user.id}}/donation">my donations</a></p>
-<p><a href="delete/{{user.id}}" onclick="return confirm('Are you sure you want to delete this?')">delete account</a>
 
 </p>
 </html>

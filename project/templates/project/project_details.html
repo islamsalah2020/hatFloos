@@ -11,12 +11,22 @@
     <li>Description: {{ item.description }}</li>
     <li>Category: {{ item.category }}</li>
     <li>Target: {{ item.target }}</li>
-    <li>Start Date: {{ item.start_date  }}</li>
+    <li>Start Date: {{ item.start_date }}</li>
     <li>End Date: {{ item.end_date }}</li>
     <li>Creator: {{ item.creator }}</li>
         <a href="/project/{{item.id}}/tag">Add project tag</a>
 
 
+    <h2> old Comments: </h2>
+    {% for comment in comments %}
+    <li>{{ comment.comment_body }}</li>
+    <li>{{ comment.commenter }}</li>
+    {% endfor %}
+    <h2> Add New Comment2: </h2>
+    <form method="POST"> {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
 </ul>
 </body>
 </html>

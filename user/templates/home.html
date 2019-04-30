@@ -1,11 +1,39 @@
-{% block title %}{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HatFloos</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-{% block content %}
-{% if user.is_authenticated %}
-  hi {{ user.username }}!
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
-  <a href="{% url 'register' %}">signup</a>
-{% endif %}
-{% endblock %}
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
+
+            {# Django Home Link / Admin Link / Register Link#}
+            {# Some logic on what to display for last item#}
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+            <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
+            <li><a class="navbar-link" href="{% url 'register' %}">Register</a></li>
+            <li><a class="navbar-link" href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+            <li><a class="navbar-link" href="{% url 'top_rated' %}">TOP 5</a></li>
+            <li><a class="navbar-link" href="{% url 'featured_projects' %}">Featured projects</a></li>
+            <li><a class="navbar-link" href="{% url 'latest_projects' %}">latest projects</a></li>
+
+
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    {% block body_block %}
+    {% endblock %}
+</div>
+</body>
+</html>

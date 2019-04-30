@@ -8,7 +8,7 @@ class CustomUserCreationForm(UserCreationForm):
     last_name = forms.CharField(max_length=20)
     FB = forms.URLField(required=False, max_length=60)
     DOB = forms.DateTimeField(required=False)
-    picture = forms.ImageField(required=False)
+    picture = forms.ImageField(required=True)
     country = forms.CharField(required=False, max_length=20)
     phone = forms.RegexField(regex=r'^01[0125][0-9]{8}$')
 
