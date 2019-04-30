@@ -23,12 +23,15 @@
             <li><a class="navbar-link" href="{% url 'register' %}">Register</a></li>
             <li><a class="navbar-link" href="{% url 'login' %}">Login</a></li>
             {% endif %}
+            <!--<input type="text" name="q" value="{{request.GET.q}}" placeholder="Search project"/>-->
             <li><a class="navbar-link" href="{% url 'top_rated' %}">TOP 5</a></li>
             <li><a class="navbar-link" href="{% url 'featured_projects' %}">Featured projects</a></li>
             <li><a class="navbar-link" href="{% url 'latest_projects' %}">latest projects</a></li>
-
-
         </ul>
+         <form action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
+                <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search projects"/>
+                <input type="submit" name="submit" value="search"/>
+            </form>
     </div>
 </nav>
 <div class="container">
