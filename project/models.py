@@ -37,7 +37,9 @@ class Tag(models.Model):
 class Pic(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     # project = models.ManyToOneRel(Project,on_delete=models.CASCADE)
-    pic = models.ImageField()
+    pic = models.ImageField(upload_to='images/')
+
+    # picture = models.ImageField(upload_to='images/')
 
     def __str__(self):
         return str(self.pic)

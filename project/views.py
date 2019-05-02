@@ -1,30 +1,42 @@
 from django.shortcuts import redirect, render, HttpResponse
-from .models import Category, CustomUser, Project, Donation, ProjectReport, Tag
+from .models import Category, CustomUser, Pic, Project, Donation, ProjectReport, Tag
 from comment.models import Comment
 from comment.forms import AddCommentForm
 from django.db.models import Sum
-from project.forms import ProjectCreationForm, CatCreationForm, TagForm
+from project.forms import ProjectCreationForm, CatCreationForm, TagForm, PictureCreationForm
 from user.forms import ReportForm
 from django.contrib.auth.decorators import login_required
+from django.forms import modelformset_factory
 
 
 @login_required(login_url='/users/login')  # redirect when user is not logged in
 def create(request, uid):
+    ImageFormSet = modelformset_factory(Pic, form=PictureCreationForm, extra=4)  # new
+
     if request.method == 'POST':
 
         form = ProjectCreationForm(request.POST)
-        if form.is_valid():
-            print("*******************form creator1111111111111111************")
-            form.creator = uid
-            print(form.creator)
-            print("*******************form fields************")
-            print(form.fields)
-            print("*******************uuuuuuuuuuuiiiiiiiiiiiiiidddddddddddddddd************")
-            print(uid)
-            print("*******************form creator22222222222222222************")
-            print(form.creator)
-            print("*****************kkkkkkkkkkkk**************")
-            form.save()
+        formset = ImageFormSet(request.POST, request.FILES, queryset=Pic.objects.none())  # new
+
+        if form.is_valid() and formset.is_valid:  # new
+
+            project_form = form.save(commit=False)
+            project_form.creator = CustomUser.objects.get(id=uid)
+            project_form.save()
+            # # new
+            for form2 in formset.cleaned_data:
+                if form2:
+                    image = form2['pic']
+                    photo = Pic(project=project_form, pic=image)
+                    photo.save()
+            # end new
+
+            # new 2
+            # edit3 = formset.save(commit=False)
+            # edit3.project = edit2
+            # edit3.save()
+            # end new 2
+            # list my projects after create new one
             projects = Project.objects.filter(creator_id=uid)
             my_projects = []
             for project in projects:
@@ -34,8 +46,13 @@ def create(request, uid):
             return render(request, 'project/list_all.html', {"projects": my_projects})
 
     else:
-        form = ProjectCreationForm()
-        args = {'form': form}
+
+        project_form = ProjectCreationForm()
+        # pic_form = PictureCreationForm()
+
+        pic_form = ImageFormSet(queryset=Pic.objects.none())  # new
+        args = {'project_form': project_form, 'pic_form': pic_form}  # new
+
         return render(request, 'project/CreateProject.html', args)
 
 
@@ -69,6 +86,10 @@ def project_details(request, pid):
     item = Project.objects.get(id=pid)
     # here hard coded for current user till add it from url
     user = CustomUser.objects.get(id=item.creator_id)
+
+    # send pics of project
+    images = item.pic_set.all()
+    # end
     comments = item.comment_set.all()
     # comments = Comment.objects.all()
     if request.method == "POST":
@@ -79,18 +100,18 @@ def project_details(request, pid):
 
         edit.save()
         form = AddCommentForm()
-        return render(request, 'project/project_details.html', {"item": item, "form": form, "comments": comments})
+        return render(request, 'project/project_details.html',
+                      {"item": item, "form": form, "comments": comments, "images": images})
     else:
         form = AddCommentForm
-        return render(request, 'project/project_details.html', {"item": item, "form": form, "comments": comments})
-
-    return render(request, 'project/project_details.html', {"item": item})
+        return render(request, 'project/project_details.html',
+                      {"item": item, "form": form, "comments": comments, "images": images})
 
 
 def delete_project(request, pid):
     project = Project.objects.get(id=pid)
     total_donation = Donation.objects.filter(project_id=pid).aggregate(Sum('amount'))
-    if total_donation['amount__sum'] is None or total_donation['amount__sum'] < (project.target * 25)/100:
+    if total_donation['amount__sum'] is None or total_donation['amount__sum'] < (project.target * 25) / 100:
         project.delete()
     return myprojects(request, request.user.id)
 
@@ -126,7 +147,3 @@ def tag_project(request, pid):
         form = TagForm(request.POST)
         args = {'form': form}
         return render(request, 'project/tag_project.html', args)
-
-
-
-
