@@ -1,36 +1,93 @@
-<html>
+{% load staticfiles %}
 
-<title>Profile</title>
+<head>
 
-<div class="container">
-    <h1>Profile</h1>
-    <p>Username: {{ user }}</p>
-    <p>First name: {{ user.first_name }}</p>
-    <p>Last name: {{ user.last_name }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>DOB: {{ user.DOB }}</p>
-    <p>FB: {{ user.FB }}</p>
-    <p>Counrtry: {{ user.country }}</p>
-    <p>Phone: {{ user.phone }}</p>
+    <title>{{user.username}}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+{% block body_block %}
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
 
+            {# Django Home Link / Admin Link / Register Link#}
+            {# Some logic on what to display for last item#}
+            <li><a href="{% url 'home' %}"><i class='fas fa-comment-dollar'
+                                              style='font-size:38px;color:#330000'></i></a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="/project/{{user.id}}/projects"> MyProjects</a></li>
+            <li><a href="/project/{{user.id}}/donations"> MyDonations</a></li>
+            <li><a href="/project/{{user.id}}/create"> Create new Project</a></li>
+            <li><a href="edit/{{user.id}}">Update profile</a></li>
+            <li><a href="delete/{{user.id}}" onclick="return confirm('Are you sure you want to delete this?')">delete
+                account</a>
+            </li>
+            <li>
+                <a href="/users/{{user.id}}"><p>{{ user.first_name }}{{user.last_name}}</p></a>
+            </li>
+            <li>
+                <img class="profilePicture" src="{{ MEDIA_URL }}{{ user.picture }}" alt="Avatar">
 
-    <img src="{{ MEDIA_URL }}{{ user.picture }}" alt="...">
+            </li>
+            {% else %}
+            <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
+            <li><a class="navbar-link" href="{% url 'register' %}">Register</a></li>
+            <li><a class="navbar-link" href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+            <!--<input type="text" name="q" value="{{request.GET.q}}" placeholder="Search project"/>-->
+        </ul>
+    </div>
+    <form action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
+        <div class="search">
+            <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search projects"/>
+            <input type="submit" name="submit" value="search"/>
+        </div>
+    </form>
+</nav>
 
+<div class="personaldata">
+    <h2>Personal Info</h2>
+    <p>
+        <i class="material-icons" style="font-size:20px;">email</i>
+        {{ user.email }}
+    </p>
+    <p>
+        <i class="fa fa-birthday-cake" style="font-size:24px"></i>
+        {{ user.DOB }}
+    </p>
 
+    <p>
+        <i class="fa fa-facebook-square" style="font-size:24px"></i>
+        <a href="{{ user.FB }}">{{ user.FB }}</a>
+    </p>
+    <p>
+        <i class="material-icons" style="font-size:26px">home</i>
+        {{ user.country }}</p>
 
+    <p>
+        <i class="material-icons" style="font-size:20px">phone_android</i>
+        {{ user.phone }}
+    </p>
+</div>
+<div class="myprojects">
+    <h2>Projects</h2>
+    {% for project in projects %}
+    <li><a href=/project/x/{{project.id}}>{{ project.title }}</a> </li>
+    <li>{{ project.donations }}</li>
+    <a href="/project/{{project.id}}/delete" onclick="return confirm('Are you sure you want to delete this?')">Cancel project</a>
+    <a href="/project/{{project.id}}/report">Report project</a>
+    {% endfor %}
 
 </div>
-<p><a href="/project/{{user.id}}/projects"> MyProjects</a></p>
-<p><a href="/project/{{user.id}}/donations"> MyDonations</a></p>
-<p><a href="/project/{{user.id}}/create"> Create new Project</a></p>
-<p><a href="{% url 'logout' %}">logout</a></p>
-<p><a href="edit/{{user.id}}">Update</a></p>
-<p><a href="delete/{{user.id}}" onclick="return confirm('Are you sure you want to delete this?')">delete account</a>
 
-</p>
-</html>
-<!-- <p><a href="{{user.id}}/delete">delete account</a></p> -->
-
-</p>
-</html>
-
+{% endblock %}

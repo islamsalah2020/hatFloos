@@ -79,7 +79,7 @@ def myprojects(request, uid):
         total_donation = Donation.objects.filter(project_id=project.id).aggregate(Sum('amount'))
         single_project = {"title": project.title, "donations": total_donation, "id": project.id}
         my_projects.append(single_project)
-    return render(request, 'project/list_all.html', {"projects": my_projects})
+    return render(request, 'accounts/profile.html', {"projects": my_projects})
 
 
 def project_details(request, pid):

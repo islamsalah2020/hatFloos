@@ -1,23 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load crispy_forms_tags %}
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <title>hello</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<h1>create project</h1>
-<form method="post" enctype="multipart/form-data">
+<div class="container">
+    <h1>create project</h1>
+    <form method="post" enctype="multipart/form-data">
 
-    {% csrf_token %}
-    {{ project_form.as_p }}
+        {% csrf_token %}
+        {{ project_form | crispy}}
 
-    {{ pic_form.management_form }}
+        {{ pic_form.management_form }}
 
-    {% for form in pic_form %}
-    {{ form }} <br/>
-    {% endfor %}
-    <!--    end new 3-->
-    <button type="submit">Submit</button>
-</form>
+        {% for form in pic_form %}
+        {{ form | crispy}} <br/>
+        {% endfor %}
+        <!--    end new 3-->
+        <button type="submit">Submit</button>
+    </form>
+</div>
 </body>
-</html>
+{% endblock %}

@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html>
+{% load staticfiles %}
+
 <head>
     <meta charset="utf-8">
     <title>HatFloos</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
 
 </head>
 
@@ -16,7 +21,10 @@
 
             {# Django Home Link / Admin Link / Register Link#}
             {# Some logic on what to display for last item#}
+            <li><a href="{% url 'home' %}"><i class='fas fa-comment-dollar'
+                                              style='font-size:38px;color:#330000'></i></a></li>
             {% if user.is_authenticated %}
+            <li><a href="/users/{{user.id}}">{{user.first_name}}</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
             <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
@@ -27,12 +35,11 @@
             <li><a class="navbar-link" href="{% url 'top_rated' %}">TOP 5</a></li>
             <li><a class="navbar-link" href="{% url 'featured_projects' %}">Featured projects</a></li>
             <li><a class="navbar-link" href="{% url 'latest_projects' %}">latest projects</a></li>
-            <li><a class="navbar-link" href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a></li>
         </ul>
-         <form action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
-                <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search projects"/>
-                <input type="submit" name="submit" value="search"/>
-            </form>
+        <form action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
+            <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search projects"/>
+            <input type="submit" name="submit" value="search"/>
+        </form>
     </div>
 </nav>
 <div class="container">
