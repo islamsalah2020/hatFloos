@@ -41,3 +41,6 @@ class CustomUserChangeForm(UserChangeForm):
 class ReportForm(forms.Form):
     report_reason = forms.CharField(max_length=100)
 
+#
+# class SearchForm(forms.Form):
+#     search = forms.CharField(max_length=100, label=None)

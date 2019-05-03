@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user.apps.UserConfig',  # new hager
     'crispy_forms',  # new hager
+    'social_django',  # new hager
+
 ]
 AUTH_USER_MODEL = 'user.CustomUser'  # new hager
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -61,6 +63,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',  # new hager
+
 ]
 
 ROOT_URLCONF = 'hatFloos.urls'
@@ -76,7 +80,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.media'
+                'django.template.context_processors.media',
+                'social_django.context_processors.backends',  # new hager
+                'social_django.context_processors.login_redirect',  # new hager
 
             ],
         },
@@ -123,6 +129,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Aunthentication backend third parity
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -146,3 +162,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+SOCIAL_AUTH_FACEBOOK_KEY = APP_ID  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = APP_SECRET
